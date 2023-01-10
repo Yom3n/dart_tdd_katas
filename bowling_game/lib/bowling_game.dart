@@ -11,18 +11,13 @@ class BowlingGame {
 
   bool isFirstRollInFrame = true;
 
-  bool isSpareRoleBonusActive = false;
-
-  int numRollsWithStrikeBonus = 0;
+  int numRollsWithBonus = 0;
 
   void roll(int numPinsKnocked) {
     print("KNOCKED $numPinsKnocked");
-    if (numRollsWithStrikeBonus > 0) {
+    if (numRollsWithBonus > 0) {
       points += 2 * numPinsKnocked;
-      numRollsWithStrikeBonus--;
-    } else if (isSpareRoleBonusActive) {
-      points += 2 * numPinsKnocked;
-      isSpareRoleBonusActive = false;
+      numRollsWithBonus--;
     } else {
       points += numPinsKnocked;
     }
@@ -32,14 +27,14 @@ class BowlingGame {
 
     if (_allPinsKnockedInFirstRollInFrame(numPinsKnocked)) {
       //STRIKE
-      numRollsWithStrikeBonus = 2;
+      numRollsWithBonus = 2;
       _goToNextFrame();
       return;
     }
 
     if (_isSecondRollInFrame()) {
       if (_isSpare()) {
-        isSpareRoleBonusActive = true;
+        numRollsWithBonus = 1;
       }
       _goToNextFrame();
       return;
