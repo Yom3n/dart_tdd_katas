@@ -2,7 +2,6 @@ const int maxFrameNumber = 10;
 const int numAllPins = 10;
 
 class BowlingGame {
-  ///Bowling game consists of
   int numFrame = 1;
 
   int points = 0;
@@ -25,12 +24,10 @@ class BowlingGame {
     } else {
       points += numPinsKnocked;
     }
-    // print("Points: $points");
     currentFramePins -= numPinsKnocked;
     assert(currentFramePins >= 0);
 
     if (_isStrike(numPinsKnocked)) {
-      //STRIKE
       numRollsWithBonus = 2;
       _goToNextFrame();
       return;

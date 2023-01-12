@@ -26,11 +26,11 @@ void main() {
   test(
       'test spare - when all pins are knocked in 2 rolls,'
       'player get bonus equal to num of pins scored in next roll', () {
-    //Arrange
     //Act
     sut
       ..roll(2)
       ..roll(2)
+      //Roll Spare
       ..roll(7)
       ..roll(3)
       //Roll with spare bonus
@@ -43,8 +43,6 @@ void main() {
   test(
       'test strike - when all pins are knock down in first throw in frame. '
       'It ends the frame, and the sum of the next 2 rolls is the bonus', () {
-    //Arrange
-
     //Act
     sut
       //Frame 1 (Strike)
@@ -58,10 +56,8 @@ void main() {
     expect(sut.score(), 10 + 2 * (2 + 7) + 3);
   });
 
-  test('Test Game end after 10 frames', () {
+  test('Test Game stops adding points after 10 roll', () {
     //Arrange
-
-    //Act
     for (int i = 1; i <= 10; i++) {
       sut
         ..roll(2)
@@ -69,7 +65,7 @@ void main() {
     }
     expect(sut.isGameEnded(), true);
     expect(sut.score(), 50);
-    //Next rolls should not be count
+    //Act
     sut
       ..roll(5)
       ..roll(6);
@@ -80,14 +76,13 @@ void main() {
   test('When player hit Strike in last frame, he should get 2 additional rolls',
       () {
     //Arrange
-
-    //Act
     for (int i = 1; i <= 9; i++) {
       sut
         ..roll(2)
         ..roll(3);
     }
     expect(sut.score(), 45);
+    //Act
     //Strike in final frame
     sut.roll(10);
     expect(sut.isGameEnded(), false);
@@ -103,14 +98,13 @@ void main() {
   test('When player hit Spare in last frame, he should get 1 additional roll',
       () {
     //Arrange
-
-    //Act
     for (int i = 1; i <= 9; i++) {
       sut
         ..roll(2)
         ..roll(3);
     }
     expect(sut.score(), 45);
+    //Act
     //Spare in final frame
     sut
       ..roll(5)
