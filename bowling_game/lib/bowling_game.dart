@@ -29,7 +29,7 @@ class BowlingGame {
     currentFramePins -= numPinsKnocked;
     assert(currentFramePins >= 0);
 
-    if (_allPinsKnockedInFirstRollInFrame(numPinsKnocked)) {
+    if (_isStrike(numPinsKnocked)) {
       //STRIKE
       numRollsWithBonus = 2;
       _goToNextFrame();
@@ -47,9 +47,7 @@ class BowlingGame {
     }
   }
 
-  bool isGameEnded() => numFrame > maxFrameNumber;
-
-  bool _isLastFrame() => numFrame == maxFrameNumber;
+  bool isGameEnded() => numFrame > maxFrameNumber && numRollsWithBonus == 0;
 
   void _goToNextFrame() {
     currentFramePins = numAllPins;
@@ -57,7 +55,7 @@ class BowlingGame {
     isFirstRollInFrame = true;
   }
 
-  bool _allPinsKnockedInFirstRollInFrame(int numPinsKnocked) =>
+  bool _isStrike(int numPinsKnocked) =>
       isFirstRollInFrame && numPinsKnocked == numAllPins;
 
   bool _isSpare() => currentFramePins == 0;

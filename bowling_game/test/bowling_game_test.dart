@@ -76,4 +76,50 @@ void main() {
     //Assert
     expect(game.score(), 50);
   });
+
+  test('When player hit Strike in last frame, he should get 2 additional rolls',
+      () {
+    //Arrange
+    final game = BowlingGame();
+    //Act
+    for (int i = 1; i <= 9; i++) {
+      game
+        ..roll(2)
+        ..roll(3);
+    }
+    expect(game.score(), 45);
+    //Strike in final frame
+    game.roll(10);
+    expect(game.isGameEnded(), false);
+    game
+      ..roll(1)
+      ..roll(6);
+
+    //Assert
+    expect(game.isGameEnded(), true);
+    expect(game.score(), 45 + 10 + 2 * 1 + 2 * 6);
+  });
+
+  test('When player hit Spare in last frame, he should get 1 additional roll',
+      () {
+    //Arrange
+    final game = BowlingGame();
+    //Act
+    for (int i = 1; i <= 9; i++) {
+      game
+        ..roll(2)
+        ..roll(3);
+    }
+    expect(game.score(), 45);
+    //Spare in final frame
+    game
+      ..roll(5)
+      ..roll(5);
+    expect(game.isGameEnded(), false);
+    game.roll(6);
+
+    //Assert
+    expect(game.isGameEnded(), true);
+    expect(game.score(), 45 + 10 + 6 * 2);
+  });
 }
