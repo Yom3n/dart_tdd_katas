@@ -57,4 +57,23 @@ void main() {
     //Assert
     expect(game.score(), 10 + 2 * (2 + 7) + 3);
   });
+
+  test('Test Game end after 10 frames', () {
+    //Arrange
+    final game = BowlingGame();
+    //Act
+    for (int i = 1; i <= 10; i++) {
+      game
+        ..roll(2)
+        ..roll(3);
+    }
+    expect(game.isGameEnded(), true);
+    expect(game.score(), 50);
+    //Next rolls should not be count
+    game
+      ..roll(5)
+      ..roll(6);
+    //Assert
+    expect(game.score(), 50);
+  });
 }

@@ -15,13 +15,17 @@ class BowlingGame {
 
   void roll(int numPinsKnocked) {
     print("KNOCKED $numPinsKnocked");
+    if (isGameEnded()) {
+      print("GAME ENDED");
+      return;
+    }
     if (numRollsWithBonus > 0) {
       points += 2 * numPinsKnocked;
       numRollsWithBonus--;
     } else {
       points += numPinsKnocked;
     }
-    print("Points: $points");
+    // print("Points: $points");
     currentFramePins -= numPinsKnocked;
     assert(currentFramePins >= 0);
 
@@ -42,6 +46,10 @@ class BowlingGame {
       isFirstRollInFrame = false;
     }
   }
+
+  bool isGameEnded() => numFrame > maxFrameNumber;
+
+  bool _isLastFrame() => numFrame == maxFrameNumber;
 
   void _goToNextFrame() {
     currentFramePins = numAllPins;
